@@ -33,7 +33,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
   LIBRARIES ros_tutorials_action
-  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp std_msgs
+  CATKIN_DEPENDS actionlib actionlib_msgs roscpp std_msgs
   DEPENDS Boost
 )
 

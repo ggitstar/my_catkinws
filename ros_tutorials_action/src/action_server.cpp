@@ -1,4 +1,4 @@
-#include "ros/ros.h"
+#include "/opt/ros/kinetic/include/ros/ros.h"
 #include "actionlib/server/simple_action_server.h"
 #include "ros_tutorials_action/Fibonacci.h"
 
@@ -63,6 +63,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "action_server");
   //フィボナッチ宣言アクション名"ros_tutorial_action"
   FibonacciAction fiboacci("ros_tutorial_action");
+  //アクション受信の目標まで待つ
   ros::spin();
   return 0;
 }
