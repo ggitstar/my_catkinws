@@ -1,31 +1,31 @@
 #include "/opt/ros/kinetic/include/ros/ros.h"
 #include "actionlib/server/simple_action_server.h"
-#include "ros_tutorials_action/Fibonacci.h"
+#include "ros_tutorials_action/FibonacciAction.h"
 
-class FibobacciAction
+class FibonacciAction
 {
 protected:
   ros::NodeHandle nh_;
-  actionlib::SimpleActionServer<ros_tutorials_action::FibobacciAction> as_;
+  actionlib::SimpleActionServer<ros_tutorials_action::FibonacciAction> as_;
   //アクション名の変数
   std::string action_name_;
   //パブリッシュのためのアクションフィードバック及び結果のオブジェクト
   ros_tutorials_action::FibonacciFeedback feedback_;
-  ros_tutorials_action::FibonacciResult result;
+  ros_tutorials_action::FibonacciResult result_;
 
 public:
-//アクションサーバ初期化コンストラクタ
-  FibobacciAction(std::string name) : as_(nh_, name, boost::bind(&FibobacciAction::executeCB, this, _l), false),
+  //アクションサーバ初期化コンストラクタ
+  FibonacciAction(std::string name) : as_(nh_, name, boost::bind(&FibonacciAction::executeCB, this, _1), false),
                                       action_name_(name)
   {
     as_.start();
   }
-  ~FibobacciAction(void) {}
+  ~FibonacciAction(void) {}
   //アクション目標(goal)メッセージを受信し、指定したアクションを実行する
-  void executeCB(const ros_tutoriails_action::FibonacciGoalConstPtr &goal)
+  void executeCB(const ros_tutorials_action::FibonacciGoalConstPtr &goal)
   {
     ros::Rate r(1);
-    bool success = true;//アクションの成功失敗
+    bool success = true; //アクションの成功失敗
 
     //フィボナッチ数列の初期化
     feedback_.sequence.clear();
@@ -41,28 +41,27 @@ public:
       if (as_.isPreemptRequested() || !ros::ok())
       {
         ROS_INFO("%s:Preempted", action_name_.c_str());
-        as_.setPreempted();//アクションの取り消しを知らせる
-        succed = false;
+        as_.setPreempted(); //アクションの取り消しを知らせる
+        success = false;
         break;
       }
       feedback_.sequence.push_back(feedback_.sequence[i] + feedback_.sequence[i - 1]);
       as_.publishFeedback(feedback_);
       r.sleep();
-
-      if (success)
-      {
-        result_.sequence = feedback_.sequence;
-        ROS_INFO("%s:Succed", action_name_.c_str());
-        as_.setSucceeded(result_);
-      }
+    }
+    if (success)
+    {
+      result_.sequence = feedback_.sequence;
+      ROS_INFO("%s:Succed", action_name_.c_str());
+      as_.setSucceeded(result_);
     }
   }
-}
+};
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "action_server");
   //フィボナッチ宣言アクション名"ros_tutorial_action"
-  FibonacciAction fiboacci("ros_tutorial_action");
+  FibonacciAction fibonacci("ros_tutorial_action");
   //アクション受信の目標まで待つ
   ros::spin();
   return 0;

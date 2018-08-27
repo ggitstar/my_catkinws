@@ -2,14 +2,14 @@
 #include "actionlib/client/simple_action_client.h"
 #include "actionlib/client/terminal_state.h"
 //アクション目標状態ヘッダファイル
-#include "ros_tutorials_action/Fibonacci.h"
+#include "ros_tutorials_action/FibonacciAction.h"
 
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "action_client");
   //アクションクライアントの宣言
-  actionlib::SimpleActionClient<ros_tutorials_action::FibonacciAction>ac("ros_tutorial_action",true);
+  actionlib::SimpleActionClient<ros_tutorials_action::FibonacciAction> ac("ros_tutorial_action",true);
   ROS_INFO("waiting for action server to start");
   ac.waitForServer();//アクションサーバが実行されるまで待機
 
@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   goal.order=20;//アクション目標を指定
   ac.sendGoal(goal);//アクション目標を転送
   //アクション目標の達成に対するタイムリミットを設定
-  bool finished_before_timeout=waitForResult(ros::Duration(30.0));
+  bool finished_before_timeout=ac.waitForResult(ros::Duration(30.0));
 
   if(finished_before_timeout){
     actionlib::SimpleClientGoalState state=ac.getState();
