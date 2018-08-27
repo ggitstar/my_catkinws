@@ -2,12 +2,15 @@
 <package format="2">
   <name>ros_tutorials_topic</name>
   <version>0.0.0</version>
-  <description>The ros_tutorials_topic package</description>
+  <description>ros tutorials package to learn the topic</description>
 
-  <maintainer email="sora@todo.todo">sora</maintainer>
-
+  <maintainer email="maedalab@todo.todo">maedalab</maintainer>
   <license>Apache License 2.0</license>
+  <author email="s1424@st.sasebo.ac.jp">Sora Nagao</author> -->
 
+  <url type="bugtracker">https://github.com/ROBOTICS-GIT/ros_tutorials/issues</url>
+  <url type="repository">https://github.com/ROBOTICS-GIT/ros_tutorials.git</url>
+  <url type="website">https://www.robotics.com</url>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>message_generation</build_depend>
