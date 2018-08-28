@@ -3,14 +3,16 @@
 
 int main(int argc,char **argv){
     ros::init(argc,argv,"topic_publisher");
+    //このプロセスでのノードへのハンドラ
     ros::NodeHandle nh;
 
     //パブリッシャの宣言
+    //"ros_tutorials_topic"という名前のトピックにMagTutorial型タイプのメッセージを送ることを伝える
     ros::Publisher ros_tutorial_pub=nh.advertise<ros_tutorials_topic::MsgTutorial>
     ("ros_tutorial_msg",100);
 
     ros::Rate loop_rate(10);
-
+    //MsgTutorial型のメッセージを適用
     ros_tutorials_topic::MsgTutorial msg;
 
     int count=0;

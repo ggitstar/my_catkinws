@@ -1,6 +1,6 @@
 #include "/opt/ros/kinetic/include/ros/ros.h"
 #include "ros_tutorials_topic/MsgTutorial.h"
-//メッセージのコールバック関数ros_tutorial_msgトピックにてメッセージを受信したときに
+//メッセージのコールバック関数ros_tutorial_msgトピックにてメッセージを受信したときに動作する参照渡し担っている
 void msgCallback(const ros_tutorials_topic::MsgTutorial::ConstPtr& msg){
     ROS_INFO("receive msg=%d",msg->stamp.sec);
     ROS_INFO("receive msg=%d",msg->stamp.nsec);
