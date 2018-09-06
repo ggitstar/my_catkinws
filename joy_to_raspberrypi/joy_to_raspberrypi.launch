@@ -1,0 +1,4 @@
+<launch>
+  <node name="joy_cont" pkg="joy_to_raspberrypi" type="joy_cont" />
+  <node name="adv_cmsg_listener" pkg="adv_lecture" type="" output="screen"/>
+</launch>
