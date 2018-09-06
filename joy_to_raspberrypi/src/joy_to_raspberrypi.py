@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import numpy as np
+import numpy as p
 import rospy as rp
 from sensor_msgs.msg import Joy
+from std_msgs.msg import *
 from joy_to_raspberrypi.msg import Controller
 
 class JoyConvert(object):
