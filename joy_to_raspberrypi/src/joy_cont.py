@@ -4,12 +4,15 @@ import numpy as p
 import rospy as rp
 from sensor_msgs.msg import Joy
 from joy_to_raspberrypi.msg import Controller
+from std_msgs.msg import UInt16MultiArray
 
 class JoyConvert(object):
 
   def __init__(self):
     self._joy_sub=rp.Subscriber('joy',Joy,self.joyCallback,queue_size=100)
-    self._joy_pub=rp.Publisher('joy_cont',Controller,queue_size=100)
+  #  self._joy_pub=rp.Publisher('joy_cont',Controller,queue_size=100)
+    self._joy_pub=rp.Publisher('joy_cont',UInt16MultiArray,queue_size=100)
+
     self.state=[0,0,0,0,0]
 
   def joyCallback(self,joy_msg):
@@ -44,15 +47,22 @@ class JoyConvert(object):
 
 if __name__=='__main__':
   rp.init_node('Joy_cont')
-  rate=rp.Rate(10)
+  rate=rp.Rate(30)
   joy_cont=JoyConvert()
-  cont=Controller()
+  #cont=Controller()
+  cont=UInt16MultiArray()
+  cont.data=[0]*5
   while not rp.is_shutdown():
-      cont.analog[0]=joy_cont.state[0]
-      cont.analog[1]=joy_cont.state[1]
-      cont.analog[2]=joy_cont.state[2]
-      cont.analog[3]=joy_cont.state[3]
-      cont.buttons=joy_cont.state[4]
+#      cont.analog[0]=joy_cont.state[0]
+#      cont.analog[1]=joy_cont.state[1]
+#      cont.analog[2]=joy_cont.state[2]
+#      cont.analog[3]=joy_cont.state[3]
+#      cont.buttons=joy_cont.state[4]
+      cont.data[0]=joy_cont.state[0]
+      cont.data[1]=joy_cont.state[1]
+      cont.data[2]=joy_cont.state[2]
+      cont.data[3]=joy_cont.state[3]
+      cont.data[4]=joy_cont.state[4]
       rp.loginfo(cont)
       joy_cont._joy_pub.publish(cont)
       rate.sleep()
