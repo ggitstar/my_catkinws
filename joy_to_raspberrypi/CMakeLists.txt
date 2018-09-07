@@ -36,10 +36,15 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
   LIBRARIES joy_to_raspberrypi
-  CATKIN_DEPENDS message_generation roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
+#   catkin_packageにあるものはexec_dependになければならない。
+#        逆にexec_dependのすべてがcatkin_packageに存在する必要はない。
+#    find_packageとcatkin_packageで同時に指定したものはbuild_dependになければならない。
+#       exec_dependで指定したがbuild_dependにはないものは、find_packageにあってはならない。
+#
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
@@ -49,8 +54,7 @@ include_directories(
 #   src/${PROJECT_NAME}/joy_to_raspberrypi.cpp
 # )
 
- add_executable(joy_to_raspberrypi src/joy_to_raspberrypi.py)
- add_dependencies(joy_to_raspberrypi ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
- target_link_libraries(joy_to_raspberrypi ${catkin_LIBRARIES})
-
+# add_executable(joy_to_raspberrypi src/joy_to_raspberrypi.py)
+# add_dependencies(joy_to_raspberrypi ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# target_link_libraries(joy_to_raspberrypi ${catkin_LIBRARIES})
 

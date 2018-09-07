@@ -1,29 +1,27 @@
 #!/usr/bin/env python
-
+import sys
 import numpy as p
 import rospy as rp
 from sensor_msgs.msg import Joy
-from std_msgs.msg import *
 from joy_to_raspberrypi.msg import Controller
 
 class JoyConvert(object):
 
   def __init__(self):
-    self._joy_sub=rp.Subscriber('Joy',Joy,self.joyCallback,queue_size=100)
+    self._joy_sub=rp.Subscriber('joy',Joy,self.joyCallback,queue_size=100)
     self._joy_pub=rp.Publisher('joy_cont',Controller,queue_size=100)
     self.state=[0,0,0,0,0]
 
   def joyCallback(self,joy_msg):
-    self.state[0]=int((joy_msg.axes[0])*100)
-    self.state[1]=int((joy_msg.axes[1])*100)
-    self.state[2]=int((joy_msg.axes[2])*100)
-    self.state[3]=int((joy_msg.axes[3])*100)
+    self.state[0]=int((joy_msg.axes[0]+1)*100)
+    self.state[1]=int((joy_msg.axes[1]+1)*100)
+    self.state[2]=int((joy_msg.axes[2]+1)*100)
+    self.state[3]=int((joy_msg.axes[3]+1)*100)
     for i in range(12):
       if(joy_msg.buttons[i]):
         self.state[4]|=1<<i
       else:
         self.state[4]&=~(1<<i)
-#上下キー
     if joy_msg.axes[4]>0:
       self.state[4]|=1<<12
     else:
@@ -45,7 +43,7 @@ class JoyConvert(object):
       self.state[4]&=~(1<<15)
 
 if __name__=='__main__':
-  rp.init_node('joy_cont')
+  rp.init_node('Joy_cont')
   rate=rp.Rate(10)
   joy_cont=JoyConvert()
   cont=Controller()
