@@ -47,7 +47,7 @@ class JoyConvert(object):
 
 if __name__=='__main__':
   rp.init_node('Joy_cont')
-  rate=rp.Rate(30)
+  rate=rp.Rate(50)
   joy_cont=JoyConvert()
   #cont=Controller()
   cont=UInt16MultiArray()
